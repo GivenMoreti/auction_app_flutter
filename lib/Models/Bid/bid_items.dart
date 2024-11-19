@@ -1,5 +1,5 @@
 import 'package:auction_bid_app/Models/Auction/auction.dart';
-import 'package:auction_bid_app/Models/Auction/product.dart';
+import 'package:auction_bid_app/Models/Product/product.dart';
 import 'package:auction_bid_app/Models/Bid/bid_model.dart';
 import 'package:flutter/material.dart';
 
