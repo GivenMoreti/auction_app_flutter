@@ -9,6 +9,7 @@ class FavoriteAuctionsPage extends StatelessWidget {
     FavoriteAuction(
       dateAdded: DateTime.now(),
       item: Product(
+        prodId: 1,
         imgUrl: "https://example.com/image.jpg", // Example image URL
         title: "Vintage Watch",
         price: 100.0,

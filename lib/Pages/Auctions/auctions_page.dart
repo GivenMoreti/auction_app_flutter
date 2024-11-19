@@ -11,17 +11,18 @@ class AuctionsPage extends StatefulWidget {
 }
 
 class _AuctionsPageState extends State<AuctionsPage> {
- 
   // List of auctions
 
   final List<Auction> auctionsList = [
     Auction(
       item: Product(
+        prodId: 1,
         price: 23000,
         title: "Laptop",
         dateAdded: DateTime.now(),
         imgUrl: "https://via.placeholder.com/150",
       ),
+      auctionId: 1,
       auctionPrice: 32000,
       startDate: DateTime.now(),
       isSold: false,
@@ -29,11 +30,13 @@ class _AuctionsPageState extends State<AuctionsPage> {
     ),
     Auction(
       item: Product(
+        prodId: 2,
         price: 2000,
         title: "Iphone",
         dateAdded: DateTime.now(),
         imgUrl: "https://via.placeholder.com/150",
       ),
+      auctionId: 2,
       auctionPrice: 12000,
       startDate: DateTime.now(),
       isSold: false,
