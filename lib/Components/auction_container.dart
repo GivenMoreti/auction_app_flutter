@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class AuctionContainer extends StatelessWidget {
+class AuctionContainer extends StatefulWidget {
   final String title;
   final double price;
   final DateTime dateAdded;
@@ -9,8 +9,23 @@ class AuctionContainer extends StatelessWidget {
   final bool isSold;
   final String imgUrl;
 
+  const AuctionContainer(
+      {super.key,
+      required this.title,
+      required this.price,
+      required this.dateAdded,
+      required this.isSold,
+      required this.imgUrl,
+      required this.startDate,
+      required this.endDate});
+
+  @override
+  State<AuctionContainer> createState() => _AuctionContainerState();
+}
+
+class _AuctionContainerState extends State<AuctionContainer> {
   String getTimeLeft() {
-    final Duration timeLeft = endDate.difference(DateTime.now());
+    final Duration timeLeft = widget.endDate.difference(DateTime.now());
 
     // Format the time left
     final String timeLeftString = timeLeft.inDays > 0
@@ -23,15 +38,13 @@ class AuctionContainer extends StatelessWidget {
     return timeLeftString;
   }
 
-  const AuctionContainer(
-      {super.key,
-      required this.title,
-      required this.price,
-      required this.dateAdded,
-      required this.isSold,
-      required this.imgUrl,
-      required this.startDate,
-      required this.endDate});
+  bool _isAddedToFavorite = false;
+
+  void addToFavorite() {
+    setState(() {
+      _isAddedToFavorite = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +70,7 @@ class AuctionContainer extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.network(
-              imgUrl,
+              widget.imgUrl,
               height: 150,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -74,7 +87,7 @@ class AuctionContainer extends StatelessWidget {
 
           // Title
           Text(
-            title,
+            widget.title,
             style: const TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.bold,
@@ -84,7 +97,7 @@ class AuctionContainer extends StatelessWidget {
 
           // Price
           Text(
-            'Price: \$${price.toStringAsFixed(2)}',
+            'Price: \$${widget.price.toStringAsFixed(2)}',
             style: const TextStyle(
               fontSize: 16.0,
               color: Colors.green,
@@ -103,10 +116,10 @@ class AuctionContainer extends StatelessWidget {
                 ),
               ),
               Text(
-                isSold ? "Yes" : "No",
+                widget.isSold ? "Yes" : "No",
                 style: TextStyle(
                   fontSize: 16.0,
-                  color: isSold ? Colors.red : Colors.blue,
+                  color: widget.isSold ? Colors.red : Colors.blue,
                 ),
               ),
             ],
@@ -115,7 +128,7 @@ class AuctionContainer extends StatelessWidget {
 
           // Date Added
           Text(
-            'Added on: ${dateAdded.toLocal().toString().split(' ')[0]}',
+            'Added on: ${widget.dateAdded.toLocal().toString().split(' ')[0]}',
             style: const TextStyle(
               fontSize: 14.0,
               color: Colors.grey,
@@ -127,6 +140,14 @@ class AuctionContainer extends StatelessWidget {
               fontSize: 14.0,
               color: Colors.grey,
             ),
+          ),
+          IconButton.outlined(
+            onPressed: () {
+              // add item to favorites
+              addToFavorite();
+            },
+            icon: Icon(Icons.favorite),
+            isSelected: _isAddedToFavorite,
           ),
         ],
       ),

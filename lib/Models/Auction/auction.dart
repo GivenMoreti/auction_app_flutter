@@ -1,7 +1,8 @@
-import 'package:auction_bid_app/Models/auction_item.dart';
+import 'package:auction_bid_app/Models/Auction/product.dart';
+import 'package:flutter/material.dart';
 
-class Auction {
-  final AuctionItem item;
+class Auction extends ChangeNotifier{
+  final Product item;
   final double auctionPrice;
   final bool isSold;
   final DateTime startDate;
@@ -32,4 +33,6 @@ class Auction {
                 : 'Auction ended';
     return timeLeftString;
   }
+
+
 }

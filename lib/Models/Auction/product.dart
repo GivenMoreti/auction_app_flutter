@@ -1,10 +1,10 @@
-class AuctionItem {
+class Product {
   final String title;
   final double price;
   final DateTime dateAdded;
   final String imgUrl;
 
-  AuctionItem({
+  Product({
     required this.imgUrl,
     required this.title,
     required this.price,

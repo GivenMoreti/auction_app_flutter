@@ -1,6 +1,6 @@
 import 'package:auction_bid_app/Components/auction_container.dart';
-import 'package:auction_bid_app/Models/auction.dart';
-import 'package:auction_bid_app/Models/auction_item.dart';
+import 'package:auction_bid_app/Models/Auction/auction.dart';
+import 'package:auction_bid_app/Models/Auction/product.dart';
 import 'package:flutter/material.dart';
 
 class AuctionsPage extends StatefulWidget {
@@ -11,10 +11,12 @@ class AuctionsPage extends StatefulWidget {
 }
 
 class _AuctionsPageState extends State<AuctionsPage> {
+ 
   // List of auctions
+
   final List<Auction> auctionsList = [
     Auction(
-      item: AuctionItem(
+      item: Product(
         price: 23000,
         title: "Laptop",
         dateAdded: DateTime.now(),
@@ -26,7 +28,7 @@ class _AuctionsPageState extends State<AuctionsPage> {
       endDate: DateTime.now().add(const Duration(days: 7)),
     ),
     Auction(
-      item: AuctionItem(
+      item: Product(
         price: 2000,
         title: "Iphone",
         dateAdded: DateTime.now(),
