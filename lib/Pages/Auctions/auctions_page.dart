@@ -12,9 +12,9 @@ class AuctionsPage extends StatefulWidget {
 
 class _AuctionsPageState extends State<AuctionsPage> {
   // List of auctions
-
-  final List<Auction> auctionsList = [
-    Auction(
+  final List<AuctionItem> auctionsList = [
+    AuctionItem(
+      auctionId: 1,
       item: Product(
         prodId: 1,
         price: 23000,
@@ -22,21 +22,20 @@ class _AuctionsPageState extends State<AuctionsPage> {
         dateAdded: DateTime.now(),
         imgUrl: "https://via.placeholder.com/150",
       ),
-      auctionId: 1,
       auctionPrice: 32000,
       startDate: DateTime.now(),
       isSold: false,
       endDate: DateTime.now().add(const Duration(days: 7)),
     ),
-    Auction(
+    AuctionItem(
+      auctionId: 2,
       item: Product(
         prodId: 2,
         price: 2000,
-        title: "Iphone",
+        title: "iPhone",
         dateAdded: DateTime.now(),
         imgUrl: "https://via.placeholder.com/150",
       ),
-      auctionId: 2,
       auctionPrice: 12000,
       startDate: DateTime.now(),
       isSold: false,
@@ -51,19 +50,14 @@ class _AuctionsPageState extends State<AuctionsPage> {
         title: const Text("Auctions"),
       ),
       body: ListView.builder(
+        padding: const EdgeInsets.all(8.0),
         itemCount: auctionsList.length,
         itemBuilder: (context, index) {
           final auction = auctionsList[index];
-          final item = auction.item;
 
-          return AuctionContainer(
-            title: item.title,
-            price: auction.auctionPrice,
-            dateAdded: item.dateAdded,
-            isSold: auction.isSold,
-            imgUrl: item.imgUrl,
-            endDate: auction.endDate,
-            startDate: auction.startDate,
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8.0),
+            child: AuctionContainer(item: auction),
           );
         },
       ),

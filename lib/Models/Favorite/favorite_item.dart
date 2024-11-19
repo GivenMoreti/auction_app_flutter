@@ -1,12 +1,12 @@
-import 'package:auction_bid_app/Models/Product/product.dart';
-import 'package:flutter/material.dart';
+import 'package:auction_bid_app/Models/Auction/auction.dart';
 
+// favorites items will be displayed one the user click on the love icon on the auction item
 class FavoriteAuction {
-  final Product item;
+  final AuctionItem auctionItem;
   final DateTime dateAdded;
 
   FavoriteAuction({
     required this.dateAdded,
-    required this.item,
+    required this.auctionItem,
   });
 }

@@ -1,4 +1,5 @@
 import 'package:auction_bid_app/Components/favorite_auction_container.dart';
+import 'package:auction_bid_app/Models/Auction/auction.dart';
 import 'package:auction_bid_app/Models/Product/product.dart';
 import 'package:auction_bid_app/Models/Favorite/favorite_item.dart';
 import 'package:flutter/material.dart';
@@ -7,15 +8,19 @@ class FavoriteAuctionsPage extends StatelessWidget {
   // Favorite items list
   final List<FavoriteAuction> favoriteItems = [
     FavoriteAuction(
-      dateAdded: DateTime.now(),
-      item: Product(
-        prodId: 1,
-        imgUrl: "https://example.com/image.jpg", // Example image URL
-        title: "Vintage Watch",
-        price: 100.0,
         dateAdded: DateTime.now(),
-      ),
-    ),
+        auctionItem: AuctionItem(
+            auctionId: 1,
+            item: Product(
+                prodId: 1,
+                imgUrl: "",
+                title: "foo",
+                price: 13000,
+                dateAdded: DateTime.now()),
+            auctionPrice: 14000,
+            startDate: DateTime.now(),
+            isSold: false,
+            endDate: DateTime.now())),
   ];
 
   FavoriteAuctionsPage({super.key});
@@ -27,7 +32,7 @@ class FavoriteAuctionsPage extends StatelessWidget {
       itemBuilder: (context, index) {
         final favoriteAuction = favoriteItems[index];
         return FavoriteAuctionContainer(
-          item: favoriteAuction.item,
+          item: favoriteAuction.auctionItem.item,
         );
       },
     );

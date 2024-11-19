@@ -8,7 +8,7 @@ class UserProfile {
   final String location;
   // optional fields
   final List<Bid> bids = [];
-  final List<Auction> auctions = [];
+  final List<AuctionItem> auctions = [];
 
   UserProfile(
       {required this.userProfileId,

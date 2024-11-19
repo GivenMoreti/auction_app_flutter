@@ -1,5 +1,5 @@
+import 'package:auction_bid_app/provider/favorite_item_provider.dart';
 import 'package:auction_bid_app/Pages/homepage.dart';
-import 'package:auction_bid_app/provider/favorite_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,7 +9,7 @@ void main() {
       providers: [
         ChangeNotifierProvider(
           create: (context) {
-            return FavoriteAuctionProvider();
+            return FavoriteItemsProvider();
           },
         )
       ],

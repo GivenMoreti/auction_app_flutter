@@ -1,5 +1,7 @@
 import 'package:auction_bid_app/Pages/Auctions/auctions_page.dart';
+import 'package:auction_bid_app/Pages/Product/add_new_product.dart';
 import 'package:auction_bid_app/Pages/favorite_auctions_page.dart';
+import 'package:auction_bid_app/Pages/profile_page.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -14,12 +16,13 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _screens = [
     AuctionsPage(),
     FavoriteAuctionsPage(),
+    UserProfilePage(),
+    AddNewProduct(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Bottom Navigation Bar Example")),
       body: _screens[_currentIndex], // Display the current screen
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
@@ -32,6 +35,10 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: "Auctions",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.plus_one),
+            label: "Add new",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.favorite),

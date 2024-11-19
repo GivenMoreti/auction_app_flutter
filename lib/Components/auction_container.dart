@@ -1,53 +1,19 @@
+import 'package:auction_bid_app/Models/Auction/auction.dart';
+import 'package:auction_bid_app/provider/favorite_item_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class AuctionContainer extends StatefulWidget {
-  final String title;
-  final double price;
-  final DateTime dateAdded;
-  final DateTime startDate;
-  final DateTime endDate;
-  final bool isSold;
-  final String imgUrl;
+class AuctionContainer extends StatelessWidget {
+  final AuctionItem item;
 
-  const AuctionContainer(
-      {super.key,
-      required this.title,
-      required this.price,
-      required this.dateAdded,
-      required this.isSold,
-      required this.imgUrl,
-      required this.startDate,
-      required this.endDate});
-
-  @override
-  State<AuctionContainer> createState() => _AuctionContainerState();
-}
-
-class _AuctionContainerState extends State<AuctionContainer> {
-  String getTimeLeft() {
-    final Duration timeLeft = widget.endDate.difference(DateTime.now());
-
-    // Format the time left
-    final String timeLeftString = timeLeft.inDays > 0
-        ? '${timeLeft.inDays} days left'
-        : timeLeft.inHours > 0
-            ? '${timeLeft.inHours} hours left'
-            : timeLeft.inMinutes > 0
-                ? '${timeLeft.inMinutes} minutes left'
-                : 'Auction ended';
-    return timeLeftString;
-  }
-
-  bool _isAddedToFavorite = false;
-
-  void addToFavorite() {
-    setState(() {
-      _isAddedToFavorite = true;
-    });
-  }
+  const AuctionContainer({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
+    // Access the provider
+    final favoritesProvider =
+        Provider.of<FavoriteItemsProvider>(context, listen: false);
+
     return Container(
       margin: const EdgeInsets.all(8.0),
       padding: const EdgeInsets.all(12.0),
@@ -70,7 +36,7 @@ class _AuctionContainerState extends State<AuctionContainer> {
           ClipRRect(
             borderRadius: BorderRadius.circular(8.0),
             child: Image.network(
-              widget.imgUrl,
+              item.item.imgUrl,
               height: 150,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -87,7 +53,7 @@ class _AuctionContainerState extends State<AuctionContainer> {
 
           // Title
           Text(
-            widget.title,
+            item.item.title,
             style: const TextStyle(
               fontSize: 18.0,
               fontWeight: FontWeight.bold,
@@ -97,7 +63,7 @@ class _AuctionContainerState extends State<AuctionContainer> {
 
           // Price
           Text(
-            'Price: \$${widget.price.toStringAsFixed(2)}',
+            'Price: \$${item.item.price.toStringAsFixed(2)}',
             style: const TextStyle(
               fontSize: 16.0,
               color: Colors.green,
@@ -105,49 +71,36 @@ class _AuctionContainerState extends State<AuctionContainer> {
           ),
           const SizedBox(height: 4.0),
 
-          // Sold Status
+          // Favorite Button
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Sold: ',
-                style: TextStyle(
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.w500,
+              Text(
+                'Added on: ${item.item.dateAdded.toLocal().toString().split(' ')[0]}',
+                style: const TextStyle(
+                  fontSize: 14.0,
+                  color: Colors.grey,
                 ),
               ),
-              Text(
-                widget.isSold ? "Yes" : "No",
-                style: TextStyle(
-                  fontSize: 16.0,
-                  color: widget.isSold ? Colors.red : Colors.blue,
-                ),
+              Consumer<FavoriteItemsProvider>(
+                builder: (context, favoritesProvider, child) {
+                  final isFavorite = favoritesProvider.isFavorite(item);
+                  return IconButton(
+                    onPressed: () {
+                      if (isFavorite) {
+                        favoritesProvider.removeFromFavorites(item);
+                      } else {
+                        favoritesProvider.addToFavorites(item);
+                      }
+                    },
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isFavorite ? Colors.red : Colors.grey,
+                    ),
+                  );
+                },
               ),
             ],
-          ),
-          const SizedBox(height: 4.0),
-
-          // Date Added
-          Text(
-            'Added on: ${widget.dateAdded.toLocal().toString().split(' ')[0]}',
-            style: const TextStyle(
-              fontSize: 14.0,
-              color: Colors.grey,
-            ),
-          ),
-          Text(
-            'Time left: ${getTimeLeft()}',
-            style: const TextStyle(
-              fontSize: 14.0,
-              color: Colors.grey,
-            ),
-          ),
-          IconButton.outlined(
-            onPressed: () {
-              // add item to favorites
-              addToFavorite();
-            },
-            icon: Icon(Icons.favorite),
-            isSelected: _isAddedToFavorite,
           ),
         ],
       ),
